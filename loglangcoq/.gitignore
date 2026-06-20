@@ -1,0 +1,15 @@
+auto
+pdf
+latex
+html
+*.aux
+*.v.d
+*.glob
+*.vo
+*.native
+*.cmx
+*.cmo
+*.cmi
+*.cmx
+*.cmxs
+/coq_src/Makefile.bak

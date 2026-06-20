@@ -1,0 +1,23 @@
+\ProvidesFile{lstcoq}
+    [listings language file]
+
+\lstdefinelanguage[]{Coq}%
+  {morekeywords={Definition,Require,match,with,Module,Import,Proof,%
+      Case,Cases,of,end,Set,Prop,Lemma,Theorem,Save,Apply,check,Print, Notation,%
+      Intro,Intros,Elim,Inductive,Fixpoint,Function,Add,Morphism,relation},%
+   sensitive=f,%
+%   morecomment=[l]--,%
+   morecomment=[s]{(*}{*)},%
+   extendedchars=true,%
+   literate={~}{{$\ $}}1
+%{->}{{$\rightarrow$}}2 {<=}{{$\leq$}}2
+  }[keywords,comments,strings]%
+
+\endinput
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-master: "lexiqueCoq"
+%%% End: 

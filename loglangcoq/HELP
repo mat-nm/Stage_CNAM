@@ -1,0 +1,6 @@
+
+
+Debian packages needed:
+ 
+texlive-fonts-extra for textgreek latex package to work
+moreutils for sponge bash tool

@@ -1,0 +1,114 @@
+
+
+RESOURCES=./resources
+INDEX=../INDEX
+#COQDOCLIBSHTML= --coqlib_path $(RESOURCES)
+COQDOCFLAGS+= --lib-name "Chapitre" -t "NFP120 - Support de Cours en logique formelle" --no-index 
+
+# On ne met pas tout dans le document de cours, les partie techniques
+# sont à retirer. En particulier les fichier de GenericEnv, qui sont
+# plein de notations qui ne passent pas, et qui de toute façon n'ont
+# pas à être mis en creative common par nous.
+DOCFILES2=$(patsubst lib/GenEnv/%.v,,$(VFILES))
+DOCFILES3=$(patsubst logique/Gen_env_more.v,,$(DOCFILES2))
+DOCFILES4=$(patsubst logique/MiscFacts.v,,$(DOCFILES3))
+DOCFILES5=$(patsubst logique/NoT.v,,$(DOCFILES4))
+DOCFILES6=$(patsubst lib/multiset/multiset.v,,$(DOCFILES5))
+DOCFILES7=$(patsubst lib/multiset/multiset_spec.v,,$(DOCFILES6))
+DOCFILES=$(DOCFILES7)
+# finalement je met les fichiers à la main parce-que ça suffit pas
+DOCFILES=./logique/introduction.v\
+./logique/lexique.v\
+./logique/tables_de_verite.v\
+./logique/logique_generique.v\
+./logique/logique_propositionnelle.v\
+./logique/logique_propositionnelle_avec_variables.v\
+./logique/logique_predicats.v\
+./logique/logique_predicats_avec_quantificateurs.v\
+./logique/deduction_naturelle.v\
+./logique/semantique.v\
+./logique/semantique_avec_routine.v\
+./logique/semantique_avec_procedure.v
+
+
+DOLATEX=$(COQDOC) $(COQDOCLIBS) $(COQDOCFLAGS) --no-lib-name --short --latex -l --body-only
+
+# Remarque générale: Pour la documentation la "coqdep -sort ..." fait
+# par coq_makefile n'est pas assez précis: je veux l'ordre
+# d'enchaînement des cours, pas un tri selon les dépendances (chaque
+# fichier est indépendant dans l'état actuel des choses).
+
+
+# Adding creative common header
+html/index.html: $(GLOBFILES) $(VFILES)
+	- mkdir -p html
+	$(COQDOC)  $(COQDOCFLAGS) -html --no-lib-name --lib-subtitles -toc -l $(COQDOCLIBS) $(COQDOCLIBSHTML) -d html $(DOCFILES)
+	cd html; find . -name "*.html" -exec sed -i -s 's/<\/head>/<\/head><a rel="license" href="http:\/\/creativecommons.org\/licenses\/by-nc-sa\/4.0\/"><img alt="Creative Commons License" style="border-width:0" src="http:\/\/i.creativecommons.org\/l\/by-nc-sa\/4.0\/88x31.png" \/><\/a> Copyright Pierre Courtieu et Olivier Pons. This work is licensed under a <a rel="license" href="http:\/\/creativecommons.org\/licenses\/by-nc-sa\/4.0">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International public License<\/a>./' {} \;
+	cd html; find . -name "*.html" -exec sed -i -s 's/_____________<BR>/<hr width="55%";  align="center" style="margin-top:-1em; margin-bottom:-1em; height:1px;"\/>/'  {} \;
+ 	#find . -name "*.html" -exec $(RESOURCES)/cleanUTF.sh {} \;
+	cp $(RESOURCES)/tools/coqdoc/coqdoc.css html/
+
+
+# <hr style="margin:5px 5px 5px 5px" width="50%" align="center">
+html: html/index.html
+
+# Pour compiler un latex il faut ajouter le header
+# $(RESOURCES)/CoursDeLogique-nfp120.tex et le \end{document}
+pdf/%.tex: pdf/%.body.tex
+	cp $(RESOURCES)/coqdoc.sty pdf/
+	cp $(RESOURCES)/lstcoq.sty pdf/
+	rm -f $@
+	echo "% CECI EST UN FICHIER GENERE AUTOMATIQUEMENT %" > $@
+	cat $(RESOURCES)/CoursDeLogique-nfp120.tex >> $@
+	sed -e 's/{\\coqdocnotation{XXXXXXXX1}}/{\\ensuremath{\\inferrule{\\mbox{/g'\
+	 -e 's/{\\coqdocnotation{XXXXXXXX2}}/}\\\\\\mbox{/g'\
+	 -e 's/{\\coqdocnotation{XXXXXXXX3}}/}}{\\mbox{/g'\
+	 -e 's/{\\coqdocnotation{XXXXXXXX4}}/}}}}/g'\
+	 -e "s/\\\\coqref{loglangcoq.logique.semantique.::'<<[^}]*}//g"\
+	 $< >> $@
+	echo "\\\\end{document}" >> $@
+
+
+
+pdf/%.pdf: pdf/%.tex
+	cd pdf ; pdflatex $*.tex ; pdflatex $*.tex
+
+# le suffix .body.tex est reconnu par le regle ci-dessus. Ne pas
+# changer. enlever le -g pour avoir les scripts de preuve. 
+
+pdf/CoursDeLogique-nfp120.body.tex: $(VOFILES)
+	mkdir -p pdf
+	$(DOLATEX) -o $@ $(DOCFILES)
+
+
+pdf/logique_propositionnelle.body.tex: logique/tables_de_verite.vo logique/logique_propositionnelle_avec_variables.vo logique/logique_propositionnelle.vo
+	mkdir -p pdf
+	$(DOLATEX) -o $@ logique/tables_de_verite.v logique/logique_propositionnelle.v logique/logique_propositionnelle_avec_variables.v
+
+pdf/logique_des_predicats.body.tex: logique/tables_de_verite.vo logique/logique_predicats_avec_quantificateurs.vo logique/logique_predicats.vo
+	mkdir -p pdf
+	$(DOLATEX) -o $@ logique/tables_de_verite.v logique/logique_predicats.v logique/logique_predicats_avec_quantificateurs.v
+
+pdf/semantique.body.tex: logique/semantique.vo logique/semantique_avec_routine.vo logique/semantique_avec_procedure.vo
+	mkdir -p pdf
+	$(DOLATEX)  -o $@ logique/semantique.v logique/semantique_avec_routine.v logique/semantique_avec_procedure.v
+
+alldoc: html/index.html pdf/semantique.pdf pdf/logique_propositionnelle.pdf pdf/logique_des_predicats.pdf pdf/CoursDeLogique-nfp120.pdf
+
+# Gardons les fichiers intermédiaires normalement effacés pas make (voir: chained implicit rules dans la doc de make)
+.PRECIOUS: pdf/logique_propositionnelle.tex pdf/logique_des_predicats.tex pdf/semantique.tex 
+
+.PHONY: alldoc allclean
+
+# Removes also the usual garbage generated by emacs (auto directory
+# and *~ files) and latex (.aux .log).
+
+#pdfclean:
+#	echo rm -f pdf/*.{log,out,aux,toc,tex,sty}
+
+allclean: clean
+	rm -rf auto */auto
+	rm -f *~ */*~ *.aux .*.aux */*.aux */.*.aux */*.log
+
+release: allclean
+	tar cvfz ../../loglangcoq.tgz --exclude=".gitignore" --exclude=".git/*" --exclude=".git" ../../loglangcoq

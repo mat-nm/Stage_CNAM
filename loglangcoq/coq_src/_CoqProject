@@ -1,0 +1,28 @@
+# L'ordre des fichiers est important. X'est l'ordre inverse dfe
+# l'apparition des chapitre dans la doc (bizarrerie de coq_makefile).
+
+-R . loglangcoq
+# Expect this one to fail with make vos.
+./logique/check_axioms.v
+./logique/introduction.v
+./logique/lexique.v
+./logique/MiscFacts.v
+./logique/NoT.v
+./logique/tables_de_verite.v
+./logique/logique_generique.v
+./logique/logique_propositionnelle.v
+./logique/logique_propositionnelle_avec_variables.v
+./logique/logique_predicats.v
+./logique/logique_predicats_avec_quantificateurs.v
+./logique/deduction_naturelle.v
+./logique/semantique.v
+./logique/semantique_avec_routine.v
+./logique/semantique_avec_procedure.v
+./logique/Gen_env_more.v
+./logique/sequents.v
+./lib/tactics/especialize.v
+./lib/multiset/multiset_spec.v
+./lib/multiset/multiset.v
+./lib/GenEnv/CoreGenericEnv.v
+./lib/GenEnv/GenericEnv.v
+./lib/GenEnv/GenericEnvList.v

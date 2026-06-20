@@ -1,0 +1,14 @@
+
+"make" compiles all coq files
+
+"make html" produces html documentation for all modules
+
+"make pdf/CoursDeLogique-nfp120.pdf" produces pdf documentation for
+all modules in one pdf file
+
+"make alldoc" produces pdf and html documentation in directories pdf
+and html. also produces a pdf documentation split in different files.
+
+"make allclean" removes all emacs temporary files + other garbage
+
+See details about the generation of the makefile in resources/README.

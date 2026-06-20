@@ -1,0 +1,11 @@
+"make allcoq" compiles all coq files in coq_src
+
+"make alldoc" compiles all the documentations from coq files in
+coq_src, the pdf docs are in coq_src/pdf, the html docs are in
+coq_src/html.
+
+See details about the generation of the makefile in
+coq_src/resources/README.
+
+Source pour la preuve de comlplétude de la déduction naturelle au premier ordre:
+https://lig-membres.imag.fr/michel.levy/ENSEIGNEMENT/INF242_2008_2009/cours2007.pdf

@@ -1,0 +1,92 @@
+%\documentclass{article}
+
+\newcommand{\artslide}[1]{
+  \begin{center}
+    \framebox{\includeslide[height=5cm]{#1}}
+  \end{center}}
+\newcommand{\artslideD}[2]{
+  \begin{center}
+    \framebox{\includeslide[height=5cm]{#1}}\hfill
+    \framebox{\includeslide[height=5cm]{#2}}
+  \end{center}}
+
+\usepackage[latin1]{inputenc}
+\usepackage[francais]{babel}% après chapterbib (cad ouvrage-hermes)
+\usepackage{url}
+\usepackage{fullpage}
+\usepackage{listings,lstcoq}
+\renewcommand{\ttdefault}{pcr}
+\lstset{%  general  command  to  set  parameter(s)
+  language=Coq,
+%  basicstyle=\small,
+% Plus joli (mais on peut en discuter ;))
+  basicstyle=\tt,
+  keywordstyle=\bf\ttfamily,
+  commentstyle=\it\ttfamily,
+  numbers=none,
+  numberstyle=\small,
+  stepnumber=1,
+  numbersep=5pt,
+%  backgroundcolor=\color{white},
+  %keywordstyle=\color{black}\bfseries,%  underlined  bold  black  keywords
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+%  frame=single,
+%  tabsize=2,
+%  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+%  title=\lstname,
+%  escapeinside={(*}{*)},
+  morekeywords={*,...,unsigned},
+  moredelim=[is][\textbf]{<b>}{</b>},
+  columns=fixed,%fullflexible,flexible
+%  keepspaces=true,% indispensable pour le literate
+  fontadjust=false,
+  mathescape=false,
+}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{definition}[thm]{Définition}
+\usepackage{hyperref}
+\hypersetup{%
+colorlinks        = true,%     % Liens en couleur
+anchorcolor       = blue,%  % Couleur des liens externes
+linkcolor         = blue,%  % Couleur des liens externes
+urlcolor          = blue,%  % Couleur des liens externes
+}
+
+\usepackage{xspace}
+\newcommand{\nnn}{\ensuremath{\mathbb{N}}\xspace}
+\newcommand{\fff}{\ensuremath{\mathbb{F}}\xspace}
+\newcommand{\ffp}{\ensuremath{\mathbb{F}_p}\xspace}
+
+
+\title{À propos de NFP120 -- Référence et lexique pour la lecture des
+  fichiers Coq}
+
+\author{Pierre Courtieu}
+
+\date{CNAM Paris -- NFP120 -- 2012-2013}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\pagebreak
+
+\input{lexique.tex}
+
+\end{document}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+
+%  LocalWords:  Prolog parce-que NFP pdf with switch Definition pn ti
+%  LocalWords:  def Add Morphism Require Import Lemma Theorem Print
+%  LocalWords:  xxx tn xn Function Fixpoint end true false bool BNF
+%  LocalWords:  sur-ensemble Backus-Naur http nat
