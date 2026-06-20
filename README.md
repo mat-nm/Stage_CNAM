@@ -7,5 +7,5 @@ Le répertoire **loglangcoq** a été créé par Pierre Courtieu, mon maître de
 Il contient de multiples définitions, axiomes, propriétés et théorèmes en lien avec la sémantique, la logique des prédicats, la déduction naturelle, etc.
 
 ## Mes travaux
-En m'appuyant sur un ensemble de définitions de te théorèmes déjà prouvés avant mon arrivée (notamment en déduction naturelle), j'ai travaillé sur le fichier **loglangcoq/coq_src/logique/sequents.v**.
+En m'appuyant sur un ensemble de définitions de te théorèmes déjà prouvés avant mon arrivée (notamment en déduction naturelle), j'ai travaillé sur le fichier **/loglangcoq/coq_src/logique/sequents.v**.
 Au cours de mon stage, mon but était de prouver, dans Rocq (ex Coq), l'équivalence logique entre le calcul des séquents et la déduction naturelle. Le [calcul des séquents](https://en.wikipedia.org/wiki/Sequent_calculus) est un système de déduction introduit par Gentzen aafin de prouver l'élimination de la coupure.
